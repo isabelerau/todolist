@@ -26,7 +26,7 @@ public class TaskController {
     private ITaskRepository taskRepository;
 
     @PostMapping("/")
-    public ResponseEntity create(@RequestBody TaskModel taskModel, HttpServletRequest request) {
+    public ResponseEntity<?> create(@RequestBody TaskModel taskModel, HttpServletRequest request) {
         System.out.println("Chegou no controller");
         var idUsuario = request.getAttribute("idUsuario");
         taskModel.setIdUsuario((UUID) idUsuario);
@@ -54,7 +54,8 @@ public class TaskController {
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity update(@RequestBody TaskModel taskModel, HttpServletRequest request, @PathVariable UUID id) {
+    public ResponseEntity<?> update(@RequestBody TaskModel taskModel, HttpServletRequest request,
+            @PathVariable UUID id) {
         var task = this.taskRepository.findById(id).orElse(null);
 
         if (task == null) {
